@@ -1,0 +1,57 @@
+# testeoPrueba3
+correo: taller@autos.cl
+passwork : autos
+
+
+CREATE TABLE AUTO(
+    idAuto INTEGER PRIMARY KEY auto_increment,
+    patente VARCHAR(6) NOT NULL,
+    marca VARCHAR(255) NOT NULL,
+    modelo VARCHAR(255) NOT NULL,
+    añoFabricacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+insert into auto values(1, 'pkt114', 'fort', 'znt', current_timestamp);
+select * from auto;
+
+CREATE TABLE TALLER(
+    idTaller INTEGER PRIMARY KEY auto_increment,
+    nombre VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    comuna VARCHAR(255) NOT NULL,
+    responsable VARCHAR(255) NOT NULL
+);
+
+INSERT INTO Taller (idTaller,nombre,direccion,comuna,responsable) VALUES (null,"Sebastian", "PsjSebastian","SanSebastian", "MolinaSebastian");
+
+CREATE TABLE MANTENCION(
+    idMantencion INTEGER PRIMARY KEY auto_increment,
+    auto INTEGER NOT NULL,
+    taller INTEGER NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    kilometraje INTEGER NOT NULL,
+    FOREIGN KEY (auto) REFERENCES AUTO(idAuto),
+    FOREIGN KEY (taller) REFERENCES TALLER(idTaller) 
+);
+INSERT INTO Mantencion (idMantencion,auto,taller,fecha,kilometraje) VALUES (1,1, 1, NOW(), 1555);
+SELECT * FROM mantencion;
+
+CREATE TABLE OPERARIO(
+    idOperario INTEGER PRIMARY KEY auto_increment,
+    nombre VARCHAR(255) NOT NULL,
+    rut VARCHAR(9) NOT NULL
+);
+INSERT INTO Operario (idOperario,nombre,rut) VALUES (1,"Naty", "12566k");
+select * from operario;
+
+CREATE TABLE OPERACION(
+    idOperacion	INTEGER PRIMARY KEY auto_increment,
+    mantencion INTEGER NOT NULL,
+    operario INTEGER NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    FOREIGN KEY (mantencion) REFERENCES MANTENCION(idMantencion),
+    FOREIGN KEY (operario) REFERENCES OPERARIO(idOperario) 
+);
+
+INSERT INTO Operacion (idOperacion,mantencion,operario,descripcion) VALUES (1,1, 1, "cambio de neumaticos");
+select * from operacion;
